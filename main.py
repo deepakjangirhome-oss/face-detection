@@ -66,9 +66,19 @@ try:
         # Print only when the number of faces changes
         if current_faces != previous_faces:
             print("Faces detected:", current_faces)
-
-            # Update the previous face count
             previous_faces = current_faces
+
+        # Display the face count on the camera screen
+        cv2.putText(
+            frame,
+            f"Faces Detected: {current_faces}",
+            (20, 40),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            (0, 255, 0),
+            2,
+            cv2.LINE_AA
+        )
 
 
         # Go through every detected face
