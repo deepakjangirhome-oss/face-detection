@@ -1,5 +1,7 @@
 import cv2
 import sys
+import os
+from datetime import datetime
 
 
 # Load Haar Cascade Face Detector
@@ -25,6 +27,13 @@ if not camera.isOpened():
 # Store the previous number of detected faces
 # -1 is used initially because the number of faces starts from 0
 previous_faces = -1
+
+
+# Create a folder for saved screenshots
+screenshot_folder = "screenshots"
+
+if not os.path.exists(screenshot_folder):
+    os.makedirs(screenshot_folder)
 
 
 try:
@@ -98,8 +107,29 @@ try:
         cv2.imshow("Face Detection using Python", frame)
 
 
-        # Press the Q key to close the camera window
-        if cv2.waitKey(1) & 0xFF == ord("q"):
+        # Check which key pressed by user
+        key = cv2.waitKey(1) & 0xFF
+
+        # Press S to save a screenshot
+        if key == ord("s"):
+
+            # Get the current date and time
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+            # Create the screenshot filename
+            filename = f"screenshot_{timestamp}.jpg"
+
+            # Create the complete file path
+            filepath = os.path.join(screenshot_folder, filename)
+
+            # Save the current camera frame
+            cv2.imwrite(filepath, frame)
+
+            print(f"Screenshot Saved: {filepath}")
+
+
+        # Press Q to close the application
+        if key == ord("q"):
             break
 
 
