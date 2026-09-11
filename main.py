@@ -1,6 +1,7 @@
 import cv2
 import sys
 import os
+import time
 from datetime import datetime
 
 
@@ -28,6 +29,8 @@ if not camera.isOpened():
 # -1 is used initially because the number of faces starts from 0
 previous_faces = -1
 
+# Store the time of the previous frame
+previous_time = time.time()
 
 # Create a folder for saved screenshots
 screenshot_folder = "screenshots"
@@ -48,6 +51,20 @@ try:
             print("Failed to capture frame.")
             break
 
+        # Get the current time
+        current_time = time.time()
+
+        # Calculate the time taken to process one frame
+        time_difference = current_time - previous_time
+
+        # Calculate FPS
+        if time_difference > 0:
+            fps = 1 / time_difference
+        else:
+            fps = 0
+
+        # Update the previous time
+        previous_time = current_time
 
         # Convert the colored frame into grayscale
         # Face detection works better and faster with grayscale images
@@ -89,6 +106,29 @@ try:
             cv2.LINE_AA
         )
 
+        # Display the FPS
+        cv2.putText(
+            frame, 
+            f"FPS: {int(fps)}",
+            (20, 80),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1, 
+            (0, 255, 0),
+            2,
+            cv2.LINE_AA
+        )
+
+        # Display instructions
+        cv2.putText(
+            frame,
+            "S: Screenshot | Q: Quit",
+            (20, frame.shape[0] - 20),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.6,
+            (255, 255, 255),
+            2,
+            cv2.LINE_AA
+        )
 
         # Go through every detected face
         for (x, y, w, h) in faces:
