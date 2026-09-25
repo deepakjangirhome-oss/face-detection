@@ -20,6 +20,20 @@ A real-time face detection application built with Python and OpenCV. The program
 * Checks whether the camera opens successfully
 * Press `Q` to close the application safely
 
+### Code Structure
+
+The project is organized using separate Python functions for different responsibilities:
+
+* `load_face_detector()` — loads and validates the Haar Cascade model
+* `initialize_camera()` — initializes and validates the webcam
+* `detect_faces()` — processes frames and detects faces
+* `draw_information()` — displays face count, FPS, rectangles, and controls
+* `save_screenshot()` — saves screenshots with timestamp-based filenames
+* `main()` — controls the main application workflow
+
+This modular structure makes the code easier to understand, maintain, and extend.
+
+
 ## Technologies Used
 
 * Python
