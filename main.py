@@ -4,6 +4,11 @@ import os
 import time
 from datetime import datetime
 
+# Face detection settings
+SCALE_FACTOR = 1.1
+MIN_NEIGHBORS = 5
+MIN_SIZE = (80, 80)
+
 
 def load_face_detector():
     """
@@ -53,9 +58,9 @@ def detect_faces(frame, face_cascade):
     # Detect faces in the camera frame
     faces = face_cascade.detectMultiScale(
         gray,
-        scaleFactor=1.1,
-        minNeighbors=5,
-        minSize=(80, 80)
+        scaleFactor=SCALE_FACTOR,
+        minNeighbors=MIN_NEIGHBORS,
+        minSize=MIN_SIZE
     )
 
     return faces
